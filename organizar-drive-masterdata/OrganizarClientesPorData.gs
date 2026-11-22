@@ -66,10 +66,12 @@ function organizarClientesPorData() {
     const it = raiz.getFoldersByName(CATEGORIAS[c]);
     if (!it.hasNext()) { log('AVISO', CATEGORIAS[c], 'Categoria não encontrada'); continue; }
     const categoria = it.next();
-    const clientes = categoria.getFolders();
-    while (clientes.hasNext()) {
+    const lista = [];
+    const itClientes = categoria.getFolders();
+    while (itClientes.hasNext()) lista.push(itClientes.next());
+    for (let k = 0; k < lista.length; k++) {
       if (Date.now() - inicio > LIMITE_MS) { terminou = false; break externo; }
-      const cliente = clientes.next();
+      const cliente = lista[k];
       const d = primeiraData_(cliente);
       if (!d) {
         semArquivos++;
